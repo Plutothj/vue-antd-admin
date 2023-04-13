@@ -41,6 +41,10 @@ export default defineConfig(({ command, mode }) => {
       viteMockServe({
         mockPath: "/src/mock",
         localEnabled: command === "serve",
+        prodEnabled: true, // 生产打包开关 // 这样可以控制关闭mock的时候不让mock打包到最终代码内
+        injectCode: ` import { setupProdMockServer } from './src/mockProdServer'; setupProdMockServer(); `,
+        logger: false, //是否在控制台显示请求日志
+        supportTs: false, //打开后，可以读取 ts 文件模块。 请注意，打开后将无法监视.js 文件
       }),
     ],
     resolve: {
